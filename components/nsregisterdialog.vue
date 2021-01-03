@@ -1,28 +1,29 @@
 <template>
     <form @submit.prevent="onRegister">
-        <div :class="['kiwi-' + themeName + '-simple-nick', 'u-form', 'u-input',
+        <div id="nickserv-form"
+             :class="['kiwi-' + themeName + '-simple-nick', 'u-form', 'u-input',
                       'u-input-text', 'u-input-text--focus', 'u-input-text--reveal-value']"
-             id="nickserv-form"
              title="NickServ"
              style="text-align: center;"
         >
-            <p :class="['kiwi-' + themeName + '-simple-error', 'kiwi-ns-register']"
-               id="validate">
+            <p id="validate" :class="['kiwi-' + themeName + '-simple-error', 'kiwi-ns-register']">
                 {{ RegisterText }} {{ currentNick }}
             </p>
             <div class="u-input-text kiwi-ns-input">
                 <div class="u-input-text-inputs">
-                    <input class="u-input"
+                    <input v-model="accountInput"
+                           class="u-input"
                            placeholder="Inserisci un indirizzo email valido"
-                           type="text" v-model="accountInput"
+                           type="text"
                     />
                 </div>
             </div>
             <div class="u-input-text kiwi-ns-input">
                 <div class="u-input-text-inputs">
-                    <input class="u-input"
+                    <input v-model="pwdInput"
+                           class="u-input"
                            placeholder="Inserisci la password"
-                           type="password" v-model="pwdInput"
+                           type="password"
                     />
                 </div>
             </div>
@@ -49,22 +50,16 @@ export default {
         };
     },
     computed: {
-        themeName: function() {
-            return kiwi.themes.currentTheme().name.toLowerCase();
-        },
-        currentNick: function() {
+        themeName: () => kiwi.themes.currentTheme().name.toLowerCase(),
+        currentNick: () => {
             let net = kiwi.state.getActiveNetwork();
             return net.ircClient.user.nick;
         },
-        RegisterText: function() {
-            return Utils.getString('RegisterText');
-        },
-        RegButton: function() {
-            return Utils.getString('RegButton');
-        },
+        RegisterText: () => Utils.getString('RegisterText'),
+        RegButton: () => Utils.getString('RegButton'),
     },
     methods: {
-        onRegister: function() {
+        onRegister: () => {
             kiwi.state.$emit('input.raw', '/NS register ' + this.pwdInput + ' ' + this.accountInput);
         },
     },

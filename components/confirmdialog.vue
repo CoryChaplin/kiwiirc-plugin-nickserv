@@ -5,14 +5,14 @@
          title="NickServ"
          style="text-align: center;"
     >
-        <p :class="['kiwi-' + themeName + '-simple-error', 'kiwi-ns-error']"
-           id="validate">{{ ConfirmReqText }}</p>
+        <p id="validate" :class="['kiwi-' + themeName + '-simple-error', 'kiwi-ns-error']">
+            {{ ConfirmReqText }}</p>
         <div class="u-input-text kiwi-ns-input">
             <div class="u-input-text-inputs">
-                <input class="u-input"
+                <input v-model="codeInput"
+                       class="u-input"
                        placeholder="Inserisci il codice di conferma"
                        type="text"
-                       v-model="codeInput"
                 >
             </div>
         </div>
@@ -31,26 +31,18 @@ import * as Utils from '../libs/Utils.js';
 export default {
     data: function data() {
         return {
-            codeInput: '';
-       }
+            codeInput: '',
+        };
     },
 
     computed: {
-        themeName: function() {
-            return kiwi.themes.currentTheme().name.toLowerCase();
-        },
-        ConfirmReqText: function () {
-            return Utils.getString('ConfirmReqText');
-        },
-        ConfirmButton: function () {
-            return Utils.getString('ConfirmButton');
-        }
+        themeName: () => kiwi.themes.currentTheme().name.toLowerCase(),
+        ConfirmReqText: () => Utils.getString('ConfirmReqText'),
+        ConfirmButton: () => Utils.getString('ConfirmButton'),
     },
 
     methods: {
-        onIdentify: function () {
-            kiwi.state.$emit('input.raw', '/NS confirm '+ this.codeInput )
-        }
+        onIdentify: () => kiwi.state.$emit('input.raw', '/NS confirm ' + this.codeInput),
     },
 };
 </script>
