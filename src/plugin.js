@@ -7,6 +7,7 @@ import '../style.css';
 
 kiwi.plugin('nickserv', (kiwi) => {
     // Plugin Config #########################################################################
+    let lang = 'fr';
 
     // Wrong password text
     let WPText = 'Wrong password!';
@@ -17,7 +18,7 @@ kiwi.plugin('nickserv', (kiwi) => {
     // NickServ Identify Regex   include/language.h:92
     let IDString = '^This nickname is registered and protected. If this is yours';
     // Wrong password Regex include/language.h:71
-    let WPString = '^Wrong password';
+    let WPString = '^Password incorrect';
     // Services enforce nick Regex  modules/pseudoclients/nickserv.cpp:254
     let ENString = '^Your nickname will be changed to';
     // Account confirmation request Regex  modules/commands/ns_register.cpp:260
@@ -42,6 +43,42 @@ kiwi.plugin('nickserv', (kiwi) => {
     let AlreadyIdString = '^You are already identified.';
     // End Plugin Config  ####################################################################
 
+    if (lang === 'fr') {
+        // Wrong password text
+        let WPText = 'Mot de passe incorrect, veuillez le saisir à nouveau !';
+        // Bad password text on register
+        let BPText = 'Attention, merci d\'essayer un mot de passe plus sécurisé.<br> Le mot de passe doit comporter au moins 5 caractères, ne doit pas pouvoir être compris facilement (par exemple votre prénom ou votre pseudo)<br> et ne doit pas contenir d\'espace ou de tabulation.';
+
+        // ANOPE NICKSERV
+        // NickServ Identify Regex   include/language.h:92
+        IDString = '^Le pseudo est enregistré et protégé. Si c\'est votre pseudo';
+        // Wrong password Regex include/language.h:71
+        WPString = '^Mot de passe incorrect';
+        // Services enforce nick Regex  modules/pseudoclients/nickserv.cpp:254
+        ENString = '^Votre pseudo est maintenant changé en';
+        // Account confirmation request Regex  modules/commands/ns_register.cpp:260
+        // modules/commands/ns_register.cpp:391
+        ConfirmReqString = '^Votre adresse email n\'est pas confirmée. Pour la confirmer, suivez les instructions qui vous ont été envoyées lors de votre enregistrement';
+        // Invalid Confirmation code Regex modules/commands/ns_register.cpp:83
+        // modules/commands/ns_register.cpp:86
+        InvalidConfirmString = '^Mot code invalide';
+        // Invalid Confirmation code text include/language.h:99
+        InvalidConfirmText = 'Un mot-code invalide a été entré, merci de re-vérifier votre email et de réessayer';
+        // A valid confirmation code has been entered modules/commands/ns_register.cpp:67
+        ValidConfirmString = '^Votre adresse email pour (. *) a été confirmée';
+        // Bad Password Notify include/language.h:73
+        BadPwdString = '^Warning, try again with a more secure password.';
+        // Bad Email Notify include/language.h:86
+        BadEmailString = 'it is not a valid email address.';
+        // Register delay modules/commands/ns_register.cpp:153
+        RegDelayString = '^Vous devez rester connecté plus de %d secondes avant d\'enregistrer votre pseudo';
+        // Login success Valid Password Regex modules/commands/ns_identify.cpp:38
+        ValidPwdString = '^Mot de passe accepté - vous êtes maintenant identifié.';
+        // Already identified modules/commands/ns_identify.cpp:87 modules/commands/os_login.cpp:34
+        AlreadyIdString = '^Vous êtes déjà identifié.';
+        // End Plugin Config  ####################################################################
+    }
+
     let IDRe = new RegExp(IDString, '');
     let WPRe = new RegExp(WPString, '');
     let ENRe = new RegExp(ENString, '');
@@ -60,8 +97,6 @@ kiwi.plugin('nickserv', (kiwi) => {
 
     kiwi.on('theme.change', (event) => {
         data.themeName = kiwi.themes.currentTheme().name.toLowerCase();
-        console.log(data.themeName);
-
     });
 
     function registerFn() {
@@ -74,8 +109,7 @@ kiwi.plugin('nickserv', (kiwi) => {
     }
 
     function loginFn() {
-        console.log('click');
-        // kiwi.addTab('settings', 'NickServ', nslogindialog);
+        kiwi.addTab('settings', 'NickServ', nslogindialog);
         kiwi.state.$emit('mediaviewer.show', { component: nslogindialog });
     }
 
@@ -86,26 +120,24 @@ kiwi.plugin('nickserv', (kiwi) => {
     kiwi.addUi('browser', RegBtn);
 
     let loginBtn = document.createElement('a');
-    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-in"></i><span>Login</span>';
+    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-in"></i><span>Connexion</span>';
     loginBtn.addEventListener('click', loginFn);
     kiwi.addUi('header_channel', loginBtn);
 
     kiwi.on('irc.mode', (event, network) => {
-        // console.log(event);
         if ((event.nick === 'NickServ') && (event.target === network.nick)) {
             setTimeout(() => {
                 let net = kiwi.state.getActiveNetwork();
-                console.log(net.ircClient.user.modes.has('r'));
                 let hasR = net.ircClient.user.modes.has('r');
 
                 if (hasR === true) {
-                    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-out"></i><span>Logout</span>';
+                    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-out"></i><span>Déconnexion</span>';
                     loginBtn.removeEventListener('click', loginFn);
                     loginBtn.addEventListener('click', logoutFn);
                     RegBtn.removeEventListener('click', registerFn);
                     RegBtn.style.visibility = 'hidden';
                 } else {
-                    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-in"></i><span>Login</span>';
+                    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-in"></i><span>Connexion</span>';
                     loginBtn.removeEventListener('click', logoutFn);
                     loginBtn.addEventListener('click', loginFn);
                     RegBtn.style.visibility = 'visible';
@@ -160,7 +192,6 @@ kiwi.plugin('nickserv', (kiwi) => {
         if ((event.nick === 'NickServ') && (event.message.match(ValidPwdRe))) {
             let el = document.getElementById('validate');
             el.innerHTML = event.message;
-            console.log('ValidPwdRe');
             setTimeout(() => {
                 kiwi.state.$emit('mediaviewer.hide');
             }, 2000);

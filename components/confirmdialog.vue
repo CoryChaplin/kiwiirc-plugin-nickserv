@@ -11,7 +11,7 @@
             <div class="u-input-text-inputs">
                 <input v-model="codeInput"
                        class="u-input"
-                       placeholder="Inserisci il codice di conferma"
+                       placeholder="Saisissez le code de confirmation"
                        type="text"
                 >
             </div>
@@ -42,7 +42,9 @@ export default {
     },
 
     methods: {
-        onIdentify: () => kiwi.state.$emit('input.raw', '/NS confirm ' + this.codeInput),
+        onIdentify: function() {
+            kiwi.state.$emit('input.raw', '/NS confirm ' + this.codeInput);
+        },
     },
 };
 </script>

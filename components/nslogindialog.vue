@@ -13,7 +13,7 @@
             <div class="u-input-text-inputs">
                 <input v-model="accountInput"
                        class="u-input"
-                       placeholder="Inserisci account NickServ"
+                       placeholder="Identifiant de votre compte NickServ"
                        type="text"
                 />
             </div>
@@ -22,13 +22,19 @@
             <div class="u-input-text-inputs">
                 <input v-model="pwdInput"
                        class="u-input"
-                       placeholder="Inserisci la password"
+                       placeholder="Mot de passe"
                        type="password"
                 />
             </div>
+            <div>
+                <br>Vous n'avez pas encore de compte ?<br>
+                <a class="u-link kiwi-channel" @click="registerFn">
+                    Inscrivez-vous
+                </a>
+            </div>
         </div>
         <div class="u-input-text-underline">
-            <div class="u-input-text-underline-active"></div>
+            <div class="u-input-text-underline-active" />
         </div>
         <button :class="['u-button', 'u-button-primary', 'u-submit',
                          'kiwi-welcome-simple-start', 'kiwi-ns-button']"
@@ -39,6 +45,7 @@
 
 <script>
 import * as Utils from '../libs/Utils.js';
+import nsregisterdialog from './nsregisterdialog.vue';
 
 export default {
     data: function data() {
@@ -54,9 +61,13 @@ export default {
     },
 
     methods: {
-        onIdentify: () => {
+        onIdentify: function() {
             kiwi.state.$emit('input.raw', '/NS identify ' + this.accountInput + ' ' + this.pwdInput);
             kiwi.state.$emit('input.raw', '/NICK ' + this.accountInput);
+        },
+        registerFn: function() {
+            // kiwi.addTab('settings', 'NickServ', nsregisterdialog);
+            kiwi.state.$emit('mediaviewer.show', { component: nsregisterdialog });
         },
     },
 };

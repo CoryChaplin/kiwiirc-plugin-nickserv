@@ -11,7 +11,7 @@
             <div class="u-input-text-inputs">
                 <input v-model="pwdInput"
                        class="u-input"
-                       placeholder="Inserisci la password"
+                       placeholder="Mot de passe"
                        type="password"
                        required
                 >
@@ -45,7 +45,7 @@ export default {
     },
 
     methods: {
-        onIdentify: () => {
+        onIdentify: function() {
             kiwi.state.$emit('input.raw', '/NS identify ' + this.pwdInput);
         },
     },

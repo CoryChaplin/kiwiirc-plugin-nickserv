@@ -13,7 +13,7 @@
                 <div class="u-input-text-inputs">
                     <input v-model="accountInput"
                            class="u-input"
-                           placeholder="Inserisci un indirizzo email valido"
+                           placeholder="Merci de saisir un email valide"
                            type="text"
                     />
                 </div>
@@ -22,7 +22,7 @@
                 <div class="u-input-text-inputs">
                     <input v-model="pwdInput"
                            class="u-input"
-                           placeholder="Inserisci la password"
+                           placeholder="Mot de passe"
                            type="password"
                     />
                 </div>
@@ -59,7 +59,7 @@ export default {
         RegButton: () => Utils.getString('RegButton'),
     },
     methods: {
-        onRegister: () => {
+        onRegister: function() {
             kiwi.state.$emit('input.raw', '/NS register ' + this.pwdInput + ' ' + this.accountInput);
         },
     },
