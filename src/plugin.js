@@ -107,6 +107,9 @@ kiwi.plugin('nickserv', (kiwi) => {
     }
 
     function loginFn() {
+        if (kiwi.state.getActiveNetwork().password !== undefined) {
+            kiwi.state.$emit('input.raw', '/NS identify ' + kiwi.state.getActiveNetwork().password);
+        }
         kiwi.state.$emit('mediaviewer.show', { component: nslogindialog });
     }
 

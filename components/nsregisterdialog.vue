@@ -70,6 +70,7 @@ export default {
     methods: {
         onRegister: function() {
             kiwi.state.$emit('input.raw', '/NS register ' + this.pwdInput + ' ' + this.accountInput);
+            kiwi.state.getActiveNetwork().password = this.pwdInput;
         },
         loginFn: function() {
             kiwi.state.$emit('mediaviewer.show', { component: nslogindialog });
