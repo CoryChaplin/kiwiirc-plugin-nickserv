@@ -50,6 +50,7 @@ export default {
     methods: {
         onIdentify: function() {
             kiwi.state.$emit('input.raw', '/NS identify ' + this.pwdInput);
+            kiwi.state.getActiveNetwork().password = this.pwdInput;
         },
     },
 };

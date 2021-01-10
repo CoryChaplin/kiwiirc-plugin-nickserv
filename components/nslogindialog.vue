@@ -63,6 +63,7 @@ export default {
     methods: {
         onIdentify: function() {
             kiwi.state.$emit('input.raw', '/NS identify ' + this.accountInput + ' ' + this.pwdInput);
+            kiwi.state.getActiveNetwork().password = this.pwdInput;
             kiwi.state.$emit('input.raw', '/NICK ' + this.accountInput);
         },
         registerFn: function() {
