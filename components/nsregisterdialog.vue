@@ -34,7 +34,7 @@
             </div>
             <div>
                 Vous avez déjà un compte ?<br>
-                <a class="u-link kiwi-channel">
+                <a class="u-link kiwi-channel" @click="loginFn">
                     Connectez-vous
                 </a>
             </div>

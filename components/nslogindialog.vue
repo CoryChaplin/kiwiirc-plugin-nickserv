@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <br>Vous n'avez pas encore de compte ?<br>
-                    <a class="u-link kiwi-channel">
+                    <a class="u-link kiwi-channel" @click="registerFn">
                         Inscrivez-vous
                     </a>
                 </div>
