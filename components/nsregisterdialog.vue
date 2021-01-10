@@ -1,5 +1,5 @@
 <template>
-    <form class="u-form" @submit="onRegister">
+    <form class="u-form" @submit.prevent="onRegister">
         <div id="nickserv-form"
              :class="['kiwi-appsettings-block', 'kiwi-appsettings-block-aliases']"
              title="NickServ"

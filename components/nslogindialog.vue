@@ -1,5 +1,5 @@
 <template>
-    <form class="u-form" @submit="onIdentify">
+    <form class="u-form" @submit.prevent="onIdentify">
         <div id="nickserv-form"
              title="NickServ"
              style="text-align: center;"
