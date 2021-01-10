@@ -1,46 +1,46 @@
 <template>
-    <div id="nickserv-form"
-         title="NickServ"
-         style="text-align: center;"
-         :class="['kiwi-' + themeName + '-simple-nick',
-                  'u-form', 'u-input', 'u-input-text', 'u-input-text--focus',
-                  'u-input-text--reveal-value']"
-    >
-        <p id="validate" :class="['kiwi-' + themeName + '-simple-error', 'kiwi-ns-login']">
-            {{ LoginText }}
-        </p>
-        <div class="u-input-text kiwi-ns-input">
-            <div class="u-input-text-inputs">
-                <input v-model="accountInput"
-                       class="u-input"
-                       placeholder="Identifiant de votre compte NickServ"
-                       type="text"
-                />
+    <form class="u-form" @submit="onIdentify">
+        <div id="nickserv-form"
+             title="NickServ"
+             style="text-align: center;"
+             :class="['kiwi-appsettings-block', 'kiwi-appsettings-block-aliases']"
+        >
+            <h3 id="validate" :class="['kiwi-ns-login']">
+                {{ LoginText }}
+            </h3>
+            <div>&nbsp;</div>
+            <div class="u-input-text kiwi-ns-input">
+                <div class="u-input-text-inputs">
+                    <input v-model="accountInput"
+                           class="u-input"
+                           placeholder="Identifiant de votre compte NickServ"
+                           type="text"
+                    />
+                </div>
             </div>
-        </div>
-        <div class="u-input-text kiwi-ns-input">
-            <div class="u-input-text-inputs">
-                <input v-model="pwdInput"
-                       class="u-input"
-                       placeholder="Mot de passe"
-                       type="password"
-                />
+            <div class="u-input-text kiwi-ns-input">
+                <div class="u-input-text-inputs">
+                    <input v-model="pwdInput"
+                           class="u-input"
+                           placeholder="Mot de passe"
+                           type="password"
+                    />
+                </div>
+                <div>
+                    <br>Vous n'avez pas encore de compte ?<br>
+                    <a class="u-link kiwi-channel">
+                        Inscrivez-vous
+                    </a>
+                </div>
             </div>
-            <div>
-                <br>Vous n'avez pas encore de compte ?<br>
-                <a class="u-link kiwi-channel" @click="registerFn">
-                    Inscrivez-vous
-                </a>
+            <div class="u-input-text-underline">
+                <div class="u-input-text-underline-active" />
             </div>
+            <button :class="['u-button', 'u-button-primary', 'u-submit',
+                             'kiwi-welcome-simple-start', 'kiwi-ns-button']"
+            >{{ IDButton }}</button>
         </div>
-        <div class="u-input-text-underline">
-            <div class="u-input-text-underline-active" />
-        </div>
-        <button :class="['u-button', 'u-button-primary', 'u-submit',
-                         'kiwi-welcome-simple-start', 'kiwi-ns-button']"
-                @click="onIdentify"
-        >{{ IDButton }}</button>
-    </div>
+    </form>
 </template>
 
 <script>
@@ -66,7 +66,6 @@ export default {
             kiwi.state.$emit('input.raw', '/NICK ' + this.accountInput);
         },
         registerFn: function() {
-            // kiwi.addTab('settings', 'NickServ', nsregisterdialog);
             kiwi.state.$emit('mediaviewer.show', { component: nsregisterdialog });
         },
     },

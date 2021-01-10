@@ -30,71 +30,67 @@
 }
 
 #nickserv-form .kiwi-sky-simple-error {
-    width:468px;
-    margin:0 auto;
-    margin-bottom:10px;
-    text-align:left;
-
+    width: 468px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    text-align: left;
 }
+
 .kiwi-ns-login {
-    font-size:1.2em;
+    font-size: 1.2em;
 }
 
-.kiwi-ns-login:before {
-    font-family:FontAwesome;
-    content: "\f090" ;
-    margin-right:5px;
+.kiwi-ns-login::before {
+    font-family: FontAwesome;
+    content: "\f090";
+    margin-right: 5px;
 }
-
 
 .kiwi-ns-register {
-    font-size:1.2em;
+    font-size: 1.2em;
 }
 
-.kiwi-ns-register:before {
-    font-family:FontAwesome;
-    content: "\f023" ;
-    margin-right:5px;
+.kiwi-ns-register::before {
+    font-family: FontAwesome;
+    content: "\f023";
+    margin-right: 5px;
 }
 
 .kiwi-ns-error {
-    font-size:1.0em;
+    font-size: 1em;
 }
 
-.kiwi-ns-error:before {
-    font-family:FontAwesome;
-    content: "\f071" ;
-    margin-right:5px;
+.kiwi-ns-error::before {
+    font-family: FontAwesome;
+    content: "\f071";
+    margin-right: 5px;
 }
+
 .kiwi-ns-input {
-	max-width:468px;
+    max-width: 468px;
 	margin-left: auto;
 	margin-right: auto;
 }
+
 #nickserv-form .input-text-underline {
     width:468px;
 
 }
-.kiwi-ns-button {
 
-}
 
-.kiwi-ns-button:before {
-    font-family:FontAwesome;
-    content: "\f023" ;
-    margin-right:5px;
+.kiwi-ns-button::before {
+    font-family: FontAwesome;
+    content: "\f023";
+    margin-right: 5px;
 }
 
 @media screen and (max-width: 468px) {
-
     #nickserv-form .kiwi-sky-simple-error {
-        width:100%;
+        width: 100%;
     }
-
 
     #nickserv-form .input-text-underline {
-        width:100%;
-        margin:0px;
+        width: 100%;
+        margin: 0px;
     }
-
 }

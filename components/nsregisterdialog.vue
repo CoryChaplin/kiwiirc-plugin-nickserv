@@ -1,19 +1,24 @@
 <template>
-    <form @submit.prevent="onRegister">
+    <form class="u-form" @submit="onRegister">
         <div id="nickserv-form"
-             :class="['kiwi-' + themeName + '-simple-nick', 'u-form', 'u-input',
-                      'u-input-text', 'u-input-text--focus', 'u-input-text--reveal-value']"
+             :class="['kiwi-appsettings-block', 'kiwi-appsettings-block-aliases']"
              title="NickServ"
              style="text-align: center;"
         >
-            <p id="validate" :class="['kiwi-' + themeName + '-simple-error', 'kiwi-ns-register']">
+            <h3 id="validate" :class="['kiwi-ns-register']">
                 {{ RegisterText }} {{ currentNick }}
-            </p>
+            </h3>
+            <div>&nbsp;</div>
+            <div>
+                Inscription gratuite et sans engagement.<br>
+                L'inscription permet de protéger votre pseudo.
+            </div>
+            <div>&nbsp;</div>
             <div class="u-input-text kiwi-ns-input">
                 <div class="u-input-text-inputs">
                     <input v-model="accountInput"
                            class="u-input"
-                           placeholder="Merci de saisir un email valide"
+                           placeholder="Adresse e-mail"
                            type="text"
                     />
                 </div>
@@ -27,8 +32,11 @@
                     />
                 </div>
             </div>
-            <div class="u-input-text-underline">
-                <div class="u-input-text-underline-active"></div>
+            <div>
+                Vous avez déjà un compte ?<br>
+                <a class="u-link kiwi-channel">
+                    Connectez-vous
+                </a>
             </div>
             <button
                 :class="['u-button', 'u-button-primary', 'u-submit',
@@ -41,6 +49,7 @@
 </template>
 <script>
 import * as Utils from '../libs/Utils.js';
+import nslogindialog from './nslogindialog.vue';
 
 export default {
     data: function data() {
@@ -61,6 +70,9 @@ export default {
     methods: {
         onRegister: function() {
             kiwi.state.$emit('input.raw', '/NS register ' + this.pwdInput + ' ' + this.accountInput);
+        },
+        loginFn: function() {
+            kiwi.state.$emit('mediaviewer.show', { component: nslogindialog });
         },
     },
 };

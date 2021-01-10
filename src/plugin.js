@@ -45,9 +45,9 @@ kiwi.plugin('nickserv', (kiwi) => {
 
     if (lang === 'fr') {
         // Wrong password text
-        let WPText = 'Mot de passe incorrect, veuillez le saisir à nouveau !';
+        WPText = 'Mot de passe incorrect, veuillez le saisir à nouveau !';
         // Bad password text on register
-        let BPText = 'Attention, merci d\'essayer un mot de passe plus sécurisé.<br> Le mot de passe doit comporter au moins 5 caractères, ne doit pas pouvoir être compris facilement (par exemple votre prénom ou votre pseudo)<br> et ne doit pas contenir d\'espace ou de tabulation.';
+        BPText = 'Attention, merci d\'essayer un mot de passe plus sécurisé.<br> Le mot de passe doit comporter au moins 5 caractères, ne doit pas pouvoir être compris facilement (par exemple votre prénom ou votre pseudo)<br> et ne doit pas contenir d\'espace ou de tabulation.';
 
         // ANOPE NICKSERV
         // NickServ Identify Regex   include/language.h:92
@@ -93,14 +93,12 @@ kiwi.plugin('nickserv', (kiwi) => {
 
     let data = new kiwi.Vue({ data: { themeName: '' } });
     data.themeName = kiwi.themes.currentTheme().name.toLowerCase();
-    kiwi.addTab('settings', 'NickServ', nsregisterdialog);
 
     kiwi.on('theme.change', (event) => {
         data.themeName = kiwi.themes.currentTheme().name.toLowerCase();
     });
 
     function registerFn() {
-        // kiwi.addTab('settings', 'NickServ', nsregisterdialog);
         kiwi.state.$emit('mediaviewer.show', { component: nsregisterdialog });
     }
 
@@ -109,19 +107,12 @@ kiwi.plugin('nickserv', (kiwi) => {
     }
 
     function loginFn() {
-        kiwi.addTab('settings', 'NickServ', nslogindialog);
         kiwi.state.$emit('mediaviewer.show', { component: nslogindialog });
     }
 
-    let RegBtn = document.createElement('div');
-    RegBtn.className = 'kiwi-statebrowser-register';
-    RegBtn.addEventListener('click', registerFn);
-    RegBtn.innerHTML = '<i aria-hidden="true" class="fa fa-lock"></i>';
-    kiwi.addUi('browser', RegBtn);
-
     let loginBtn = document.createElement('a');
-    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-in"></i><span>Connexion</span>';
-    loginBtn.addEventListener('click', loginFn);
+    loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-lock"></i><span>S\'inscrire</span>';
+    loginBtn.addEventListener('click', registerFn);
     kiwi.addUi('header_channel', loginBtn);
 
     kiwi.on('irc.mode', (event, network) => {
@@ -133,15 +124,12 @@ kiwi.plugin('nickserv', (kiwi) => {
                 if (hasR === true) {
                     loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-out"></i><span>Déconnexion</span>';
                     loginBtn.removeEventListener('click', loginFn);
+                    loginBtn.removeEventListener('click', registerFn);
                     loginBtn.addEventListener('click', logoutFn);
-                    RegBtn.removeEventListener('click', registerFn);
-                    RegBtn.style.visibility = 'hidden';
                 } else {
                     loginBtn.innerHTML = '<i aria-hidden="true" class="fa fa-sign-in"></i><span>Connexion</span>';
                     loginBtn.removeEventListener('click', logoutFn);
                     loginBtn.addEventListener('click', loginFn);
-                    RegBtn.style.visibility = 'visible';
-                    RegBtn.addEventListener('click', registerFn);
                 }
             }, 0);
         }
